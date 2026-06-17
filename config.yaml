@@ -1,0 +1,35 @@
+arc_human_skills:
+  storage_root: "C:/Users/redga/arc-human-skills"
+  paint:
+    exe_path: "C:/Windows/System32/mspaint.exe"
+    canvas_size: [800, 600]
+    default_color: [0, 0, 0]
+    brush_size: 2
+  video:
+    download_dir: "C:/Users/redga/arc-human-skills/tutorials"
+    whisper_model: "whisper-1"
+    localai_url: "http://192.168.1.47:8080"
+  evaluation:
+    vision_model: "qwen3.6-27b"
+    localai_url: "http://192.168.1.47:8080"
+    similarity_threshold: 0.75
+  qdrant:
+    url: "http://192.168.1.47:6333"
+    collections:
+      strokes: "arc_strokes"
+      letters: "arc_letters"
+      shapes: "arc_shapes"
+      paintings: "arc_paintings"
+  learning_tracks:
+    reading:
+      enabled: true
+      priority: 1
+      practice_per_session: 10
+    writing:
+      enabled: true
+      priority: 2
+      practice_per_session: 15
+    painting:
+      enabled: true
+      priority: 3
+      practice_per_session: 5

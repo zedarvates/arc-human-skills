@@ -1,0 +1,10 @@
+pyproject.toml
+arc_human_skills/__init__.py
+arc_human_skills/config.py
+arc_human_skills/paint_automation.py
+arc_human_skills.egg-info/PKG-INFO
+arc_human_skills.egg-info/SOURCES.txt
+arc_human_skills.egg-info/dependency_links.txt
+arc_human_skills.egg-info/requires.txt
+arc_human_skills.egg-info/top_level.txt
+tests/test_paint_automation.py

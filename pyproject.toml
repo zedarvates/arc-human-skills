@@ -1,0 +1,29 @@
+[project]
+name = "arc-human-skills"
+version = "0.1.0"
+description = "ARC-AGI-3: Learn to read, write, paint like human from zero"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pywinauto>=0.6.8",
+    "pyautogui>=0.9.54",
+    "uiautomation>=2.0.0",
+    "opencv-python>=4.8",
+    "numpy>=1.24",
+    "pillow>=10.0",
+    "yt-dlp>=2024.1",
+    "requests>=2.31",
+    "pyyaml>=6.0",
+    "qdrant-client>=1.11",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.2", "pytest-asyncio>=0.23", "ruff>=0.5"]
+gpu = ["torch>=2.1", "torchvision>=0.16"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
