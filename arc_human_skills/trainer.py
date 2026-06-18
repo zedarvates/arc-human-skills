@@ -20,7 +20,7 @@ class TrainingConfig:
     """Configuration for training loop."""
     session_duration_min: int = 30
     max_sessions: int = 0  # 0 = infinite
-    domains_per_session: List[str] = field(default_factory=lambda: ["writing", "reading", "painting"])
+    domains_per_session: List[str] = field(default_factory=lambda: ["drawing", "writing", "reading", "painting"])
     skills_per_domain: int = 3
     benchmark_interval_sessions: int = 5
     auto_benchmark: bool = True
@@ -140,7 +140,7 @@ class HumanSkillsTrainer:
         if self.config.headless:
             # Simulate for testing
             return {"rep": rep_num, "success": True, "score": 0.85, "simulated": True}
-        
+
         # Clear canvas for each rep
         self.paint_ctrl.window.type_keys("^n")
         time.sleep(0.3)
@@ -151,11 +151,13 @@ class HumanSkillsTrainer:
         except:
             pass
         self.paint_ctrl.setup_canvas(800, 600)
-        
+
         result = {"rep": rep_num}
-        
+
         # Route to appropriate practice based on domain/category
-        if skill.domain == "writing":
+        if skill.domain == "drawing":
+            result.update(self._practice_drawing_skill(skill))
+        elif skill.domain == "writing":
             result.update(self._practice_writing_skill(skill))
         elif skill.domain == "reading":
             result.update(self._practice_reading_skill(skill))
@@ -165,7 +167,7 @@ class HumanSkillsTrainer:
             result.update(self._practice_transfer_skill(skill))
         else:
             result.update({"success": False, "score": 0.0, "error": "Unknown domain"})
-        
+
         return result
     
     def _practice_writing_skill(self, skill) -> Dict:
@@ -270,6 +272,36 @@ class HumanSkillsTrainer:
             "type": "transfer",
             "enables": enabled,
             "note": "Transfer practiced via enabled skills"
+        }
+
+    def _practice_drawing_skill(self, skill) -> Dict:
+        """Practice a drawing fundamentals skill."""
+        from arc_human_skills.drawing_fundamentals.curriculum import DrawingCurriculum, get_all_strokes_for_skill
+        
+        # Get strokes for this skill using curriculum
+        curr = DrawingCurriculum()
+        strokes = get_all_strokes_for_skill(curr, skill.id)
+        
+        if not strokes:
+            return {"success": False, "score": 0.0, "error": "No strokes for skill"}
+        
+        # Draw each stroke
+        for stroke in strokes:
+            self.paint_ctrl.draw_stroke(stroke)
+        
+        # In headless mode, return simulated success
+        if self.config.headless:
+            return {"success": True, "score": 0.85, "type": "drawing", "strokes": len(strokes)}
+        
+        # TODO: Capture canvas and evaluate with geometric metrics
+        # For now, return success with placeholder score
+        return {
+            "success": True,
+            "score": 0.8,
+            "type": "drawing",
+            "category": skill.category,
+            "strokes_drawn": len(strokes),
+            "note": "Geometric evaluation pending vision model integration"
         }
     
     def run_session(self) -> Dict:
@@ -452,7 +484,7 @@ class HumanSkillsTrainer:
             print(f"Overall success rate: {self.total_successes/self.total_attempts:.1%}")
         
         # Domain summaries
-        for domain in ["writing", "reading", "painting", "transfer"]:
+        for domain in ["drawing", "writing", "reading", "painting", "transfer"]:
             summary = self.skill_dag.get_domain_summary(domain)
             print(f"\n{domain.upper()}:")
             print(f"  Mastered: {summary['mastered']}/{summary['total_skills']} ({summary['mastery_percentage']:.1f}%)")
@@ -483,7 +515,7 @@ if __name__ == "__main__":
     parser.add_argument("--max-sessions", type=int, default=0, help="Max sessions (0=infinite)")
     parser.add_argument("--headless", action="store_true", help="Run without Paint (for testing)")
     parser.add_argument("--benchmark", action="store_true", help="Run benchmark only")
-    parser.add_argument("--domains", nargs="+", default=["writing", "reading", "painting"], help="Domains to practice")
+    parser.add_argument("--domains", nargs="+", default=["drawing", "writing", "reading", "painting"], help="Domains to practice")
     
     args = parser.parse_args()
     
