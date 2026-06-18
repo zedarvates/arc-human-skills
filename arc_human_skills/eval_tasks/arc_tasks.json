@@ -1,0 +1,262 @@
+[
+  {
+    "task_id": "reading_001",
+    "domain": "reading",
+    "type": "letter_recognition",
+    "description": "Recognize printed letter A in 5 different fonts",
+    "input": {
+      "letter": "A",
+      "font_variants": ["Arial", "Arial Bold", "Times New Roman", "Courier New", "Calibri"],
+      "size": 64
+    },
+    "expected_output": {
+      "predicted_letter": "A",
+      "min_confidence": 0.7,
+      "max_errors": 0
+    },
+    "evaluation": "accuracy",
+    "difficulty": 1
+  },
+  {
+    "task_id": "reading_002",
+    "domain": "reading",
+    "type": "letter_recognition",
+    "description": "Recognize all 26 letters in standard font",
+    "input": {
+      "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      "font": "Arial",
+      "size": 64
+    },
+    "expected_output": {
+      "min_accuracy": 0.9,
+      "max_confusion_pairs": 2
+    },
+    "evaluation": "accuracy",
+    "difficulty": 2
+  },
+  {
+    "task_id": "reading_003",
+    "domain": "reading",
+    "type": "handwritten_recognition",
+    "description": "Recognize hand-drawn letters from Paint practice",
+    "input": {
+      "source": "paint_canvas",
+      "letters": ["A", "B", "C", "D", "E"],
+      "samples_per_letter": 3
+    },
+    "expected_output": {
+      "min_accuracy": 0.6,
+      "notes": "Lower threshold for hand-drawn"
+    },
+    "evaluation": "accuracy",
+    "difficulty": 3
+  },
+  {
+    "task_id": "reading_004",
+    "domain": "reading",
+    "type": "sight_words",
+    "description": "Read 10 high-frequency sight words",
+    "input": {
+      "words": ["the", "and", "you", "that", "was", "for", "are", "with", "his", "they"],
+      "font": "Arial",
+      "size": 48
+    },
+    "expected_output": {
+      "min_accuracy": 0.8
+    },
+    "evaluation": "word_accuracy",
+    "difficulty": 2
+  },
+  {
+    "task_id": "writing_001",
+    "domain": "writing",
+    "type": "stroke_execution",
+    "description": "Draw fundamental strokes accurately",
+    "input": {
+      "strokes": ["vertical_down", "horizontal_right", "diagonal_down_right", "diagonal_down_left", "curve_cw", "curve_ccw"],
+      "canvas_size": [800, 600],
+      "target_origin": [400, 300]
+    },
+    "expected_output": {
+      "endpoint_accuracy_px": 10,
+      "straightness_threshold": 0.9
+    },
+    "evaluation": "geometric_accuracy",
+    "difficulty": 1
+  },
+  {
+    "task_id": "writing_002",
+    "domain": "writing",
+    "type": "letter_formation",
+    "description": "Form letters A-E from stroke compositions",
+    "input": {
+      "letters": ["A", "B", "C", "D", "E"],
+      "repetitions": 3
+    },
+    "expected_output": {
+      "recognition_accuracy": 0.7,
+      "stroke_order_correct": true,
+      "proportion_consistency": 0.8
+    },
+    "evaluation": "recognition_based",
+    "difficulty": 2
+  },
+  {
+    "task_id": "writing_003",
+    "domain": "writing",
+    "type": "letter_formation",
+    "description": "Form all 26 letters",
+    "input": {
+      "letters": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      "repetitions": 2
+    },
+    "expected_output": {
+      "recognition_accuracy": 0.6,
+      "max_unrecognizable": 3
+    },
+    "evaluation": "recognition_based",
+    "difficulty": 3
+  },
+  {
+    "task_id": "writing_004",
+    "domain": "writing",
+    "type": "word_writing",
+    "description": "Write simple words legibly",
+    "input": {
+      "words": ["CAT", "DOG", "SUN", "BOY", "GIRL", "HOME", "TREE"],
+      "repetitions": 2
+    },
+    "expected_output": {
+      "word_recognition_rate": 0.5,
+      "letter_spacing_consistent": true
+    },
+    "evaluation": "word_recognition",
+    "difficulty": 3
+  },
+  {
+    "task_id": "painting_001",
+    "domain": "painting",
+    "type": "shape_drawing",
+    "description": "Draw basic geometric shapes",
+    "input": {
+      "shapes": ["circle", "square", "triangle", "rectangle", "oval"],
+      "size_factor": 1.0,
+      "center": [400, 300]
+    },
+    "expected_output": {
+      "shape_recognition_accuracy": 0.85,
+      "closure_completeness": 0.9,
+      "corner_accuracy": 0.8
+    },
+    "evaluation": "shape_recognition",
+    "difficulty": 1
+  },
+  {
+    "task_id": "painting_002",
+    "domain": "painting",
+    "type": "color_usage",
+    "description": "Apply correct colors to landscape elements",
+    "input": {
+      "elements": {
+        "sky": "blue",
+        "grass": "green",
+        "tree_trunk": "brown",
+        "sun": "yellow",
+        "cloud": "white"
+      }
+    },
+    "expected_output": {
+      "color_accuracy": 0.9,
+      "appropriate_usage": true
+    },
+    "evaluation": "color_accuracy",
+    "difficulty": 1
+  },
+  {
+    "task_id": "painting_003",
+    "domain": "painting",
+    "type": "guided_landscape",
+    "description": "Paint complete Bob Ross style landscape",
+    "input": {
+      "components": ["sky_gradient", "mountains", "clouds", "ground", "trees", "water"],
+      "canvas_size": [800, 600]
+    },
+    "expected_output": {
+      "component_completeness": 0.8,
+      "spatial_coherence": 0.7,
+      "human_coherence_score": 0.6
+    },
+    "evaluation": "human_evaluation",
+    "difficulty": 3
+  },
+  {
+    "task_id": "painting_004",
+    "domain": "painting",
+    "type": "creative_composition",
+    "description": "Create original painting using learned elements",
+    "input": {
+      "prompt": "Paint a happy little scene with at least 3 elements",
+      "min_elements": 3,
+      "time_limit_min": 10
+    },
+    "expected_output": {
+      "element_count": 3,
+      "coherence_score": 0.5,
+      "creativity_evidence": true
+    },
+    "evaluation": "human_evaluation",
+    "difficulty": 4
+  },
+  {
+    "task_id": "transfer_001",
+    "domain": "transfer",
+    "type": "stroke_to_shape",
+    "description": "Use writing strokes to draw painting shapes",
+    "input": {
+      "source_skills": ["vertical_down", "horizontal_right", "diagonal_down_left", "diagonal_down_right"],
+      "target_shapes": ["square", "triangle"]
+    },
+    "expected_output": {
+      "transfer_efficiency": 0.7,
+      "shape_quality_vs_native": 0.8
+    },
+    "evaluation": "transfer_metric",
+    "difficulty": 2
+  },
+  {
+    "task_id": "transfer_002",
+    "domain": "transfer",
+    "type": "reading_to_writing",
+    "description": "Reading practice improves letter formation",
+    "input": {
+      "pre_training": "reading_letter_recognition (20 reps each letter)",
+      "test_letters": ["A", "B", "C", "D", "E"]
+    },
+    "expected_output": {
+      "formation_improvement": 0.2,
+      "recognition_boost": 0.15
+    },
+    "evaluation": "pre_post_comparison",
+    "difficulty": 3
+  },
+  {
+    "task_id": "integrated_001",
+    "domain": "integrated",
+    "type": "full_pipeline",
+    "description": "Complete session: watch tutorial -> practice reading -> practice writing -> paint",
+    "input": {
+      "tutorial_url": "youtube.com/...",
+      "target_letters": ["A", "B", "C"],
+      "target_shapes": ["circle", "triangle"],
+      "target_landscape": "simple_tree"
+    },
+    "expected_output": {
+      "reading_accuracy": 0.7,
+      "writing_recognition": 0.6,
+      "painting_completeness": 0.7,
+      "session_duration_min": 30
+    },
+    "evaluation": "composite_score",
+    "difficulty": 4
+  }
+]

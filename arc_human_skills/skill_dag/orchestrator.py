@@ -27,6 +27,9 @@ class Skill:
     model: str = ""
     evaluation_metric: str = "accuracy"
     enables: List[str] = field(default_factory=list)
+    # Extra fields from manifest
+    reading_link: str = ""
+    offset: List[int] = field(default_factory=list)
 
 @dataclass
 class SkillProgress:
