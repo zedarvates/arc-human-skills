@@ -11,7 +11,7 @@ class Skill:
     """Atomic skill in the DAG."""
     id: str
     name: str
-    domain: str  # reading, writing, painting, transfer
+    domain: str  # reading, writing, painting, drawing, transfer
     category: str
     description: str
     prerequisites: List[str] = field(default_factory=list)
@@ -30,6 +30,7 @@ class Skill:
     # Extra fields from manifest
     reading_link: str = ""
     offset: List[int] = field(default_factory=list)
+    evaluation: dict = field(default_factory=dict)  # Flexible evaluation criteria
 
 @dataclass
 class SkillProgress:

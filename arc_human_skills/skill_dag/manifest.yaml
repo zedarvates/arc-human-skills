@@ -22,7 +22,7 @@ skills:
     category: "fundamental"
     description: "Left to right line - basis for E, F, T, Z, etc."
     prerequisites: []
-    stroaks: [[0, 0, 50, 0]]
+    strokes: [[0, 0, 50, 0]]
     difficulty: 1
     practice_reps: 10
 
@@ -371,3 +371,523 @@ skills:
 
 # DAG edges (prerequisites define the graph)
 # Cyclic dependencies are prevented by the SkillDAG orchestrator
+
+# ============ DRAWING FUNDAMENTALS (New - Geometric Foundation) ============
+# Level 0: Line Control (Pure Motor Control)
+  - id: "line_horizontal"
+    name: "Horizontal Line Control"
+    domain: "drawing"
+    category: "line_control"
+    description: "Straight horizontal line, left-to-right and right-to-left"
+    prerequisites: []
+    difficulty: 1
+    practice_reps: 10
+    evaluation:
+      max_deviation_px: 3
+      angle_tolerance_deg: 2
+      length_tolerance_pct: 5
+
+  - id: "line_vertical"
+    name: "Vertical Line Control"
+    domain: "drawing"
+    category: "line_control"
+    description: "Straight vertical line, top-to-bottom and bottom-to-top"
+    prerequisites: []
+    difficulty: 1
+    practice_reps: 10
+    evaluation:
+      max_deviation_px: 3
+      angle_tolerance_deg: 2
+      length_tolerance_pct: 5
+
+  - id: "line_diagonal_45"
+    name: "Diagonal 45° Line"
+    domain: "drawing"
+    category: "line_control"
+    description: "Diagonal line at 45° (↗)"
+    prerequisites: []
+    difficulty: 2
+    practice_reps: 10
+    evaluation:
+      max_deviation_px: 4
+      angle_tolerance_deg: 3
+      length_tolerance_pct: 5
+
+  - id: "line_diagonal_135"
+    name: "Diagonal 135° Line"
+    domain: "drawing"
+    category: "line_control"
+    description: "Diagonal line at 135° (↖)"
+    prerequisites: []
+    difficulty: 2
+    practice_reps: 10
+    evaluation:
+      max_deviation_px: 4
+      angle_tolerance_deg: 3
+      length_tolerance_pct: 5
+
+  - id: "line_diagonal_m45"
+    name: "Diagonal -45° Line"
+    domain: "drawing"
+    category: "line_control"
+    description: "Diagonal line at -45° (↘)"
+    prerequisites: []
+    difficulty: 2
+    practice_reps: 10
+    evaluation:
+      max_deviation_px: 4
+      angle_tolerance_deg: 3
+      length_tolerance_pct: 5
+
+  - id: "line_diagonal_m135"
+    name: "Diagonal -135° Line"
+    domain: "drawing"
+    category: "line_control"
+    description: "Diagonal line at -135° (↙)"
+    prerequisites: []
+    difficulty: 2
+    practice_reps: 10
+    evaluation:
+      max_deviation_px: 4
+      angle_tolerance_deg: 3
+      length_tolerance_pct: 5
+
+  - id: "pressure_fade_in"
+    name: "Pressure Fade In"
+    domain: "drawing"
+    category: "pressure_control"
+    description: "Line with pressure increasing from light to heavy"
+    prerequisites: ["line_horizontal"]
+    difficulty: 2
+    practice_reps: 8
+    evaluation:
+      pressure_gradient: true
+
+  - id: "pressure_fade_out"
+    name: "Pressure Fade Out"
+    domain: "drawing"
+    category: "pressure_control"
+    description: "Line with pressure decreasing from heavy to light"
+    prerequisites: ["line_horizontal"]
+    difficulty: 2
+    practice_reps: 8
+    evaluation:
+      pressure_gradient: true
+
+  - id: "pressure_wave"
+    name: "Pressure Wave"
+    domain: "drawing"
+    category: "pressure_control"
+    description: "Line with oscillating pressure (light-heavy-light)"
+    prerequisites: ["pressure_fade_in", "pressure_fade_out"]
+    difficulty: 3
+    practice_reps: 6
+    evaluation:
+      pressure_oscillation: true
+
+# Level 1: 2D Primitives
+  - id: "prim_cross"
+    name: "Cross (+)"
+    domain: "drawing"
+    category: "primitives_2d"
+    description: "Vertical + horizontal line intersection"
+    prerequisites: ["line_horizontal", "line_vertical"]
+    difficulty: 1
+    practice_reps: 5
+    evaluation:
+      angle_tolerance_deg: 3
+      centering_tolerance_px: 5
+
+  - id: "prim_square"
+    name: "Square"
+    domain: "drawing"
+    category: "primitives_2d"
+    description: "Four equal sides, 90° corners"
+    prerequisites: ["line_horizontal", "line_vertical"]
+    difficulty: 2
+    practice_reps: 8
+    evaluation:
+      angle_tolerance_deg: 3
+      length_tolerance_pct: 5
+      closure_tolerance_px: 5
+
+  - id: "prim_rectangle"
+    name: "Rectangle"
+    domain: "drawing"
+    category: "primitives_2d"
+    description: "Four sides, opposite equal, 90° corners"
+    prerequisites: ["prim_square"]
+    difficulty: 2
+    practice_reps: 6
+    evaluation:
+      angle_tolerance_deg: 3
+      length_tolerance_pct: 5
+      closure_tolerance_px: 5
+
+  - id: "prim_x_mark"
+    name: "X Mark (×)"
+    domain: "drawing"
+    category: "primitives_2d"
+    description: "Two diagonals crossing at center"
+    prerequisites: ["line_diagonal_45", "line_diagonal_135"]
+    difficulty: 2
+    practice_reps: 6
+    evaluation:
+      angle_tolerance_deg: 3
+      centering_tolerance_px: 5
+
+  - id: "prim_diamond"
+    name: "Diamond (Rotated Square)"
+    domain: "drawing"
+    category: "primitives_2d"
+    description: "Square rotated 45°"
+    prerequisites: ["prim_x_mark"]
+    difficulty: 3
+    practice_reps: 6
+    evaluation:
+      angle_tolerance_deg: 3
+      length_tolerance_pct: 5
+      closure_tolerance_px: 5
+
+  - id: "prim_equilateral_triangle"
+    name: "Equilateral Triangle"
+    domain: "drawing"
+    category: "primitives_2d"
+    description: "Three equal sides, 60° angles"
+    prerequisites: ["line_diagonal_45"]
+    difficulty: 2
+    practice_reps: 8
+    evaluation:
+      angle_tolerance_deg: 3
+      length_tolerance_pct: 5
+      closure_tolerance_px: 5
+
+  - id: "prim_right_triangle"
+    name: "Right Triangle"
+    domain: "drawing"
+    category: "primitives_2d"
+    description: "One 90° angle, two acute angles"
+    prerequisites: ["line_horizontal", "line_vertical", "line_diagonal_45"]
+    difficulty: 2
+    practice_reps: 6
+    evaluation:
+      angle_tolerance_deg: 3
+      closure_tolerance_px: 5
+
+  - id: "prim_hexagon"
+    name: "Regular Hexagon"
+    domain: "drawing"
+    category: "primitives_2d"
+    description: "Six equal sides, 120° angles"
+    prerequisites: ["prim_equilateral_triangle"]
+    difficulty: 3
+    practice_reps: 5
+    evaluation:
+      angle_tolerance_deg: 4
+      length_tolerance_pct: 6
+      closure_tolerance_px: 6
+
+  - id: "prim_octagon"
+    name: "Regular Octagon"
+    domain: "drawing"
+    category: "primitives_2d"
+    description: "Eight equal sides, 135° angles"
+    prerequisites: ["prim_square", "prim_diamond"]
+    difficulty: 3
+    practice_reps: 5
+    evaluation:
+      angle_tolerance_deg: 4
+      length_tolerance_pct: 6
+      closure_tolerance_px: 6
+
+  - id: "prim_circle"
+    name: "Circle"
+    domain: "drawing"
+    category: "primitives_2d"
+    description: "Continuous curved closed form"
+    prerequisites: ["pressure_wave"]
+    difficulty: 3
+    practice_reps: 8
+    evaluation:
+      circularity_threshold: 0.85
+      closure_tolerance_px: 8
+
+# Level 2: 3D Wireframes
+  - id: "wire_cube_iso"
+    name: "Cube (Isometric)"
+    domain: "drawing"
+    category: "wireframe_3d"
+    description: "12-edge cube in isometric projection"
+    prerequisites: ["prim_square", "line_diagonal_45"]
+    difficulty: 2
+    practice_reps: 5
+    evaluation:
+      perspective_type: "isometric"
+      edge_angle_tolerance_deg: 4
+      vertex_closure_px: 5
+
+  - id: "wire_box_iso"
+    name: "Rectangular Box (Isometric)"
+    domain: "drawing"
+    category: "wireframe_3d"
+    description: "Box with different W/D/H in isometric"
+    prerequisites: ["wire_cube_iso", "prim_rectangle"]
+    difficulty: 3
+    practice_reps: 4
+    evaluation:
+      perspective_type: "isometric"
+      proportion_tolerance_pct: 10
+
+  - id: "wire_cube_1pt"
+    name: "Cube (1-Point Perspective)"
+    domain: "drawing"
+    category: "wireframe_3d"
+    description: "Cube with depth converging to single VP"
+    prerequisites: ["wire_cube_iso", "perspective_1pt"]
+    difficulty: 3
+    practice_reps: 5
+    evaluation:
+      perspective_type: "1pt"
+      vp_convergence_tolerance_px: 8
+
+  - id: "wire_cube_2pt"
+    name: "Cube (2-Point Perspective)"
+    domain: "drawing"
+    category: "wireframe_3d"
+    description: "Cube with two vanishing points on horizon"
+    prerequisites: ["wire_cube_1pt", "perspective_2pt"]
+    difficulty: 3
+    practice_reps: 5
+    evaluation:
+      perspective_type: "2pt"
+      vp_convergence_tolerance_px: 8
+      vertex_closure_px: 6
+
+  - id: "wire_box_2pt"
+    name: "Box (2-Point Perspective)"
+    domain: "drawing"
+    category: "wireframe_3d"
+    description: "Rectangular box in 2-point perspective"
+    prerequisites: ["wire_cube_2pt", "wire_box_iso"]
+    difficulty: 4
+    practice_reps: 4
+    evaluation:
+      perspective_type: "2pt"
+      proportion_tolerance_pct: 10
+
+  - id: "wire_pyramid_2pt"
+    name: "Square Pyramid (2-Point)"
+    domain: "drawing"
+    category: "wireframe_3d"
+    description: "Pyramid on square base in 2pt perspective"
+    prerequisites: ["wire_cube_2pt", "prim_equilateral_triangle"]
+    difficulty: 4
+    practice_reps: 4
+    evaluation:
+      perspective_type: "2pt"
+      apex_centering_tolerance_px: 6
+
+  - id: "wire_prism_2pt"
+    name: "Triangular Prism (2-Point)"
+    domain: "drawing"
+    category: "wireframe_3d"
+    description: "Prism with triangle base in 2pt perspective"
+    prerequisites: ["wire_cube_2pt", "prim_equilateral_triangle"]
+    difficulty: 4
+    practice_reps: 4
+    evaluation:
+      perspective_type: "2pt"
+
+  - id: "wire_cylinder_2pt"
+    name: "Cylinder (2-Point Wireframe)"
+    domain: "drawing"
+    category: "wireframe_3d"
+    description: "Two ellipses + vertical edges in 2pt perspective"
+    prerequisites: ["wire_cube_2pt", "prim_circle", "perspective_ellipse"]
+    difficulty: 4
+    practice_reps: 4
+    evaluation:
+      perspective_type: "2pt"
+      ellipse_accuracy_threshold: 0.8
+
+  - id: "wire_cone_2pt"
+    name: "Cone (2-Point Wireframe)"
+    domain: "drawing"
+    category: "wireframe_3d"
+    description: "Ellipse base + apex in 2pt perspective"
+    prerequisites: ["wire_cube_2pt", "prim_equilateral_triangle"]
+    difficulty: 4
+    practice_reps: 3
+    evaluation:
+      perspective_type: "2pt"
+
+# Level 3: Perspective Construction
+  - id: "perspective_1pt"
+    name: "1-Point Perspective Setup"
+    domain: "drawing"
+    category: "perspective"
+    description: "Horizon line + single vanishing point"
+    prerequisites: ["wire_cube_iso"]
+    difficulty: 2
+    practice_reps: 3
+    evaluation:
+      vp_placement_accuracy_px: 5
+
+  - id: "perspective_2pt"
+    name: "2-Point Perspective Setup"
+    domain: "drawing"
+    category: "perspective"
+    description: "Horizon line + two vanishing points"
+    prerequisites: ["perspective_1pt"]
+    difficulty: 3
+    practice_reps: 3
+    evaluation:
+      vp_placement_accuracy_px: 5
+      horizon_straightness_px: 3
+
+  - id: "perspective_3pt"
+    name: "3-Point Perspective Setup"
+    domain: "drawing"
+    category: "perspective"
+    description: "Horizon + 2 VPs + zenith/nadir"
+    prerequisites: ["perspective_2pt"]
+    difficulty: 4
+    practice_reps: 2
+    evaluation:
+      vp_placement_accuracy_px: 8
+
+  - id: "perspective_ellipse"
+    name: "Ellipse in Perspective"
+    domain: "drawing"
+    category: "perspective"
+    description: "Circle drawn as ellipse in perspective"
+    prerequisites: ["perspective_2pt", "prim_circle"]
+    difficulty: 4
+    practice_reps: 5
+    evaluation:
+      ellipse_accuracy_threshold: 0.8
+      minor_axis_alignment_deg: 5
+
+  - id: "perspective_grid_ground"
+    name: "Ground Grid Construction"
+    domain: "drawing"
+    category: "perspective"
+    description: "Perspective grid on ground plane"
+    prerequisites: ["perspective_2pt"]
+    difficulty: 3
+    practice_reps: 3
+    evaluation:
+      grid_regularity_threshold: 0.85
+
+  - id: "perspective_grid_vertical"
+    name: "Vertical Grid (Wall)"
+    domain: "drawing"
+    category: "perspective"
+    description: "Perspective grid on vertical plane"
+    prerequisites: ["perspective_grid_ground"]
+    difficulty: 4
+    practice_reps: 2
+    evaluation:
+      grid_regularity_threshold: 0.85
+
+  - id: "perspective_measuring"
+    name: "Measuring Points"
+    domain: "drawing"
+    category: "perspective"
+    description: "Vertical measuring line for consistent heights"
+    prerequisites: ["perspective_grid_ground"]
+    difficulty: 4
+    practice_reps: 2
+    evaluation:
+      height_consistency_pct: 10
+
+  - id: "perspective_shadow"
+    name: "Shadow Construction"
+    domain: "drawing"
+    category: "perspective"
+    description: "Cast shadows using light direction"
+    prerequisites: ["perspective_2pt", "wire_cube_2pt"]
+    difficulty: 4
+    practice_reps: 3
+    evaluation:
+      shadow_coherence_threshold: 0.8
+
+# Level 4: Construction (Complex Scenes)
+  - id: "construct_still_life"
+    name: "Still Life Composition"
+    domain: "drawing"
+    category: "construction"
+    description: "Box, cylinder, sphere on table plane"
+    prerequisites: [
+      "wire_cube_2pt", "wire_cylinder_2pt", "prim_circle",
+      "perspective_grid_ground", "perspective_shadow"
+    ]
+    difficulty: 5
+    practice_reps: 3
+    evaluation:
+      composition_coherence_threshold: 0.8
+
+  - id: "construct_interior"
+    name: "Interior Corner"
+    domain: "drawing"
+    category: "construction"
+    description: "Room corner with furniture in 2pt"
+    prerequisites: [
+      "construct_still_life", "perspective_grid_vertical",
+      "perspective_measuring"
+    ]
+    difficulty: 5
+    practice_reps: 2
+    evaluation:
+      composition_coherence_threshold: 0.8
+
+  - id: "construct_exterior"
+    name: "Building Exterior"
+    domain: "drawing"
+    category: "construction"
+    description: "Building with roof, windows, door"
+    prerequisites: [
+      "construct_still_life", "wire_pyramid_2pt",
+      "perspective_shadow"
+    ]
+    difficulty: 5
+    practice_reps: 2
+    evaluation:
+      composition_coherence_threshold: 0.8
+
+# Cross-Domain Transfer: Drawing → Writing/Painting
+  - id: "transfer_line_to_stroke"
+    name: "Line Control → Writing Strokes"
+    domain: "transfer"
+    category: "cross_domain"
+    description: "Apply drawing line control to writing fundamental strokes"
+    prerequisites: ["line_horizontal", "line_vertical", "line_diagonal_45"]
+    enables: ["stroke_vertical_down", "stroke_horizontal_right", "stroke_diagonal_down_right"]
+    practice_reps: 5
+
+  - id: "transfer_prim_to_letter"
+    name: "Primitives → Letter Forms"
+    domain: "transfer"
+    category: "cross_domain"
+    description: "Use primitive shape mastery for letter proportion and structure"
+    prerequisites: ["prim_square", "prim_circle", "prim_equilateral_triangle", "prim_cross", "prim_x_mark"]
+    enables: ["letter_O", "letter_D", "letter_A", "letter_B", "letter_H"]
+    practice_reps: 5
+
+  - id: "transfer_wire_to_shape"
+    name: "Wireframes → Painting Shapes"
+    domain: "transfer"
+    category: "cross_domain"
+    description: "3D wireframe understanding informs painting shape construction"
+    prerequisites: ["wire_cube_iso", "wire_cylinder_2pt", "wire_cone_2pt"]
+    enables: ["shape_cube", "shape_cylinder", "shape_cone", "painting_tree_foliage", "painting_mountain"]
+    practice_reps: 5
+
+  - id: "transfer_perspective_to_scene"
+    name: "Perspective → Scene Composition"
+    domain: "transfer"
+    category: "cross_domain"
+    description: "Perspective skills enable complex painting compositions"
+    prerequisites: ["perspective_2pt", "perspective_grid_ground", "perspective_shadow"]
+    enables: ["painting_full_landscape", "construct_interior", "construct_exterior"]
+    practice_reps: 3
