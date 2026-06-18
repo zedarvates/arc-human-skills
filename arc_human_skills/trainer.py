@@ -425,8 +425,10 @@ class HumanSkillsTrainer:
                 if self.session_count % self.config.save_progress_interval == 0:
                     self.save_progress()
                 
-                # Brief pause between sessions
+                # Brief pause between sessions - skip in headless mode after last session
                 if self.running and not self.shutdown_requested:
+                    if self.config.headless and self.config.max_sessions > 0 and self.session_count >= self.config.max_sessions:
+                        break
                     print(f"\n⏸️  Session complete. Next session in 5s... (Ctrl+C to stop)")
                     for i in range(5, 0, -1):
                         if self.shutdown_requested:
