@@ -1,0 +1,373 @@
+skill_dag_version: "1.0"
+name: "arc-human-skills"
+description: "Human-like reading, writing, painting skills for ARC-AGI-3"
+
+# Skill registry - atomic skills following CogniArc v2 architecture
+skills:
+
+  # ============ FUNDAMENTAL STROKES (Writing Foundation) ============
+  - id: "stroke_vertical_down"
+    name: "Vertical Down Stroke"
+    domain: "writing"
+    category: "fundamental"
+    description: "Straight line top to bottom - basis for I, L, T, H, etc."
+    prerequisites: []
+    strokes: [[0, 0, 0, -50]]
+    difficulty: 1
+    practice_reps: 10
+
+  - id: "stroke_horizontal_right"
+    name: "Horizontal Right Stroke"
+    domain: "writing"
+    category: "fundamental"
+    description: "Left to right line - basis for E, F, T, Z, etc."
+    prerequisites: []
+    stroaks: [[0, 0, 50, 0]]
+    difficulty: 1
+    practice_reps: 10
+
+  - id: "stroke_diagonal_down_right"
+    name: "Diagonal Down-Right Stroke"
+    domain: "writing"
+    category: "fundamental"
+    description: "Top-left to bottom-right - basis for A, K, X, Y, etc."
+    prerequisites: ["stroke_vertical_down", "stroke_horizontal_right"]
+    strokes: [[0, 0, 50, -50]]
+    difficulty: 2
+    practice_reps: 10
+
+  - id: "stroke_diagonal_down_left"
+    name: "Diagonal Down-Left Stroke"
+    domain: "writing"
+    category: "fundamental"
+    description: "Top-right to bottom-left - basis for A, V, W, X, Y, etc."
+    prerequisites: ["stroke_vertical_down", "stroke_horizontal_right"]
+    strokes: [[50, 0, 0, -50]]
+    difficulty: 2
+    practice_reps: 10
+
+  - id: "stroke_curve_cw"
+    name: "Clockwise Curve"
+    domain: "writing"
+    category: "fundamental"
+    description: "Clockwise arc - basis for B, C, D, G, J, O, P, Q, R, S, etc."
+    prerequisites: []
+    strokes: [[25,0,50,-15], [50,-15,35,-35], [35,-35,0,-50]]
+    difficulty: 2
+    practice_reps: 10
+
+  - id: "stroke_curve_ccw"
+    name: "Counter-Clockwise Curve"
+    domain: "writing"
+    category: "fundamental"
+    description: "Counter-clockwise arc - basis for C, G, O, Q, S, etc."
+    prerequisites: []
+    strokes: [[25,0,0,-15], [0,-15,15,-35], [15,-35,50,-50]]
+    difficulty: 2
+    practice_reps: 10
+
+  - id: "stroke_hook_right"
+    name: "Right Hook"
+    domain: "writing"
+    category: "fundamental"
+    description: "Vertical down then hook right - basis for J, U, etc."
+    prerequisites: ["stroke_vertical_down"]
+    strokes: [[0,-50,0,-25], [0,-25,15,-10]]
+    difficulty: 2
+    practice_reps: 5
+
+  # ============ LETTER COMPOSITIONS (Writing) ============
+  - id: "letter_A"
+    name: "Letter A"
+    domain: "writing"
+    category: "letter"
+    description: "Two diagonals + crossbar"
+    prerequisites: ["stroke_diagonal_down_left", "stroke_diagonal_down_right", "stroke_horizontal_right"]
+    composition:
+      - pattern: "stroke_diagonal_down_left"
+        offset: [0, 0]
+      - pattern: "stroke_diagonal_down_right"
+        offset: [50, 0]
+      - pattern: "stroke_horizontal_right"
+        offset: [12, -25]
+    difficulty: 3
+    practice_reps: 5
+    reading_link: "reading_letter_A"
+
+  - id: "letter_B"
+    name: "Letter B"
+    domain: "writing"
+    category: "letter"
+    description: "Vertical + two clockwise curves"
+    prerequisites: ["stroke_vertical_down", "stroke_curve_cw"]
+    composition:
+      - pattern: "stroke_vertical_down"
+        offset: [0, 0]
+      - pattern: "stroke_curve_cw"
+        offset: [0, 0]
+      - pattern: "stroke_curve_cw"
+        offset: [0, -25]
+    difficulty: 3
+    practice_reps: 5
+    reading_link: "reading_letter_B"
+
+  - id: "letter_C"
+    name: "Letter C"
+    domain: "writing"
+    category: "letter"
+    description: "Single counter-clockwise curve"
+    prerequisites: ["stroke_curve_ccw"]
+    composition:
+      - pattern: "stroke_curve_ccw"
+        offset: [0, 0]
+    difficulty: 2
+    practice_reps: 5
+    reading_link: "reading_letter_C"
+
+  - id: "letter_D"
+    name: "Letter D"
+    domain: "writing"
+    category: "letter"
+    description: "Vertical + large clockwise curve"
+    prerequisites: ["stroke_vertical_down", "stroke_curve_cw"]
+    composition:
+      - pattern: "stroke_vertical_down"
+        offset: [0, 0]
+      - pattern: "stroke_curve_cw"
+        offset: [0, 0]
+    difficulty: 2
+    practice_reps: 5
+
+  - id: "letter_E"
+    name: "Letter E"
+    domain: "writing"
+    category: "letter"
+    description: "Vertical + three horizontals"
+    prerequisites: ["stroke_vertical_down", "stroke_horizontal_right"]
+    composition:
+      - pattern: "stroke_vertical_down"
+        offset: [0, 0]
+      - pattern: "stroke_horizontal_right"
+        offset: [0, 0]
+      - pattern: "stroke_horizontal_right"
+        offset: [0, -25]
+      - pattern: "stroke_horizontal_right"
+        offset: [0, -50]
+    difficulty: 2
+    practice_reps: 5
+
+  # ... (all 26 letters defined similarly)
+
+  # ============ READING SKILLS ============
+  - id: "reading_letter_recognition"
+    name: "Letter Recognition"
+    domain: "reading"
+    category: "perception"
+    description: "Recognize printed letters A-Z in multiple fonts"
+    prerequisites: []
+    model: "qwen3.6-27b"
+    practice_reps: 20
+    evaluation_metric: "accuracy"
+
+  - id: "reading_letter_A"
+    name: "Read Letter A"
+    domain: "reading"
+    category: "letter"
+    description: "Recognize letter A in various contexts"
+    prerequisites: ["reading_letter_recognition"]
+    target_letter: "A"
+    training_samples: 50
+    evaluation_metric: "accuracy"
+
+  - id: "reading_letter_B"
+    name: "Read Letter B"
+    domain: "reading"
+    category: "letter"
+    description: "Recognize letter B in various contexts"
+    prerequisites: ["reading_letter_recognition"]
+    target_letter: "B"
+    training_samples: 50
+
+  # ... (all 26 letters)
+
+  - id: "reading_sight_words"
+    name: "Sight Word Recognition"
+    domain: "reading"
+    category: "word"
+    description: "Recognize high-frequency words without decoding"
+    prerequisites: ["reading_letter_A", "reading_letter_B", "reading_letter_C", 
+                    "reading_letter_D", "reading_letter_E", "reading_letter_F",
+                    "reading_letter_G", "reading_letter_H", "reading_letter_I",
+                    "reading_letter_J", "reading_letter_K", "reading_letter_L",
+                    "reading_letter_M", "reading_letter_N", "reading_letter_O",
+                    "reading_letter_P", "reading_letter_Q", "reading_letter_R",
+                    "reading_letter_S", "reading_letter_T", "reading_letter_U",
+                    "reading_letter_V", "reading_letter_W", "reading_letter_X",
+                    "reading_letter_Y", "reading_letter_Z"]
+    word_list: ["the", "and", "you", "that", "was", "for", "are", "with", "his", "they"]
+    practice_reps: 10
+    evaluation_metric: "accuracy"
+
+  # ============ PAINTING SHAPES ============
+  - id: "shape_circle"
+    name: "Draw Circle"
+    domain: "painting"
+    category: "shape"
+    description: "Continuous circular motion"
+    prerequisites: []
+    strokes: 8
+    difficulty: 2
+    practice_reps: 10
+
+  - id: "shape_square"
+    name: "Draw Square"
+    domain: "painting"
+    category: "shape"
+    description: "Four straight lines, 90° corners"
+    prerequisites: ["stroke_vertical_down", "stroke_horizontal_right"]
+    strokes: 4
+    difficulty: 1
+    practice_reps: 10
+
+  - id: "shape_triangle"
+    name: "Draw Triangle"
+    domain: "painting"
+    category: "shape"
+    description: "Three straight lines meeting at points"
+    prerequisites: ["stroke_diagonal_down_left", "stroke_diagonal_down_right", "stroke_horizontal_right"]
+    strokes: 3
+    difficulty: 1
+    practice_reps: 10
+
+  - id: "shape_oval"
+    name: "Draw Oval"
+    domain: "painting"
+    category: "shape"
+    description: "Elongated circle"
+    prerequisites: ["shape_circle"]
+    strokes: 7
+    difficulty: 2
+    practice_reps: 5
+
+  - id: "shape_star"
+    name: "Draw 5-Point Star"
+    domain: "painting"
+    category: "shape"
+    description: "Continuous star path"
+    prerequisites: ["stroke_diagonal_down_left", "stroke_diagonal_down_right"]
+    strokes: 10
+    difficulty: 3
+    practice_reps: 5
+
+  # ============ PAINTING LANDSCAPE ELEMENTS ============
+  - id: "painting_sky_gradient"
+    name: "Paint Sky Gradient"
+    domain: "painting"
+    category: "landscape"
+    description: "Blue to white horizontal bands"
+    prerequisites: ["shape_square"]
+    colors: ["dark_blue", "blue", "light_blue", "white"]
+    technique: "horizontal_bands"
+    practice_reps: 3
+
+  - id: "painting_happy_cloud"
+    name: "Paint Happy Cloud"
+    domain: "painting"
+    category: "landscape"
+    description: "Fluffy white clouds with gray shadows"
+    prerequisites: ["shape_circle", "painting_sky_gradient"]
+    colors: ["white", "light_gray"]
+    technique: "circular_dabs"
+    practice_reps: 5
+
+  - id: "painting_tree_trunk"
+    name: "Paint Tree Trunk"
+    domain: "painting"
+    category: "landscape"
+    description: "Vertical brown trunk with texture"
+    prerequisites: ["stroke_vertical_down", "shape_rectangle"]
+    colors: ["brown", "dark_green"]
+    technique: "vertical_with_texture"
+    practice_reps: 3
+
+  - id: "painting_tree_foliage"
+    name: "Paint Tree Foliage"
+    domain: "painting"
+    category: "landscape"
+    description: "Green rounded foliage clusters"
+    prerequisites: ["shape_circle", "painting_sky_gradient"]
+    colors: ["green", "dark_green", "yellow"]
+    technique: "circular_dabs_layered"
+    practice_reps: 3
+
+  - id: "painting_mountain"
+    name: "Paint Mountain"
+    domain: "painting"
+    category: "landscape"
+    description: "Triangular mountain with snow cap"
+    prerequisites: ["shape_triangle", "painting_sky_gradient"]
+    colors: ["dark_gray", "gray", "white"]
+    technique: "triangle_with_highlight"
+    practice_reps: 3
+
+  - id: "painting_water"
+    name: "Paint Water Reflection"
+    domain: "painting"
+    category: "landscape"
+    description: "Horizontal mirror with ripples"
+    prerequisites: ["painting_sky_gradient", "painting_mountain"]
+    colors: ["blue", "light_blue", "white"]
+    technique: "horizontal_ripples"
+    practice_reps: 2
+
+  # ============ COMPOSITE LANDSCAPES ============
+  - id: "painting_full_landscape"
+    name: "Complete Bob Ross Landscape"
+    domain: "painting"
+    category: "composition"
+    description: "Sky, mountains, clouds, ground, trees, water"
+    prerequisites: [
+      "painting_sky_gradient",
+      "painting_happy_cloud",
+      "painting_mountain",
+      "painting_tree_trunk",
+      "painting_tree_foliage",
+      "painting_water"
+    ]
+    practice_reps: 1
+    evaluation_metric: "human_coherence_score"
+
+  # ============ CROSS-DOMAIN TRANSFER ============
+  - id: "transfer_stroke_to_shape"
+    name: "Transfer Strokes to Shapes"
+    domain: "transfer"
+    category: "cross_domain"
+    description: "Apply writing strokes to painting shapes"
+    prerequisites: [
+      "stroke_vertical_down", "stroke_horizontal_right",
+      "stroke_diagonal_down_left", "stroke_diagonal_down_right",
+      "stroke_curve_cw", "stroke_curve_ccw"
+    ]
+    enables: ["shape_square", "shape_triangle", "shape_circle", "shape_oval"]
+    practice_reps: 5
+
+  - id: "transfer_shape_to_letter"
+    name: "Transfer Shapes to Letters"
+    domain: "transfer"
+    category: "cross_domain"
+    description: "Use shape mastery for letter proportion"
+    prerequisites: ["shape_circle", "shape_square", "shape_triangle", "shape_oval"]
+    enables: ["letter_O", "letter_D", "letter_A", "letter_B"]
+    practice_reps: 5
+
+  - id: "transfer_reading_to_writing"
+    name: "Reading Informs Writing"
+    domain: "transfer"
+    category: "cross_domain"
+    description: "Letter recognition improves letter formation"
+    prerequisites: ["reading_letter_recognition"]
+    enables: ["letter_A", "letter_B", "letter_C", "letter_D", "letter_E"]
+    practice_reps: 10
+
+# DAG edges (prerequisites define the graph)
+# Cyclic dependencies are prevented by the SkillDAG orchestrator
