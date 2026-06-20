@@ -25,11 +25,21 @@ arc_human_skills:
       enabled: true
       priority: 1
       practice_per_session: 10
+      tutorials:
+        - "https://www.youtube.com/watch?v=5S0UV7WqG5A"  # Learn to Read - 3-Letter Word
+        - "https://www.youtube.com/watch?v=M3Wx0h4g4jQ"  # Letter Sounds
+        - "https://www.youtube.com/watch?v=hq0J1vO7w5w"  # Sight Words
     writing:
       enabled: true
       priority: 2
       practice_per_session: 15
+      tutorials:
+        - "https://www.youtube.com/watch?v=UxHYn2GgKFs"  # How to Write Letters
+        - "https://www.youtube.com/watch?v=G5o1QIPkGXo"  # Cursive Writing
     painting:
       enabled: true
       priority: 3
       practice_per_session: 5
+      tutorials:
+        - "https://www.youtube.com/watch?v=YV3RgR0n7eQ"  # Bob Ross - Mountain Landscape
+        - "https://www.youtube.com/watch?v=ohJpO0Gj0Gs"  # Acrylic Painting for Beginners
