@@ -202,3 +202,7 @@ MIT — See `LICENSE` for details.
 ---
 
 **Built for ARC-AGI-3** — Human-like skill acquisition from zero.
+
+---
+
+[![Donate](https://img.shields.io/badge/☕%20Soutenir-BTC%20%7C%20ETH-orange)](DONATE.md)
